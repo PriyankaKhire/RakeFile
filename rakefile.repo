@@ -1,0 +1,42 @@
+require 'rake/testtask'
+require 'pp'
+require 'yaml'
+require 'rake/clean'
+
+namespace :main do
+  desc "Testing rake here"
+
+  #run by command rake main:cleanup
+  task :cleanup do
+    puts "Cleaning up..."
+    [1,2,3].each do |a|
+      puts a
+    end
+  end
+
+  #run by command rake main:task_one
+  task :task_one do
+    puts "task one :)"
+  end
+
+  #run by command rake main:task_two
+  task :task_two do
+    puts "Task two :P"
+  end
+
+  #run by command rake main:task_three
+  task :task_three => [:task_one, :task_two] do
+    puts "I depend on task one and task two"
+    #Call task cleanup here
+    #namespace:task_name is important we cannot just have :task_name there and not have namespace even though it is in same name space
+    Rake::Task["main:cleanup"].invoke
+  end
+
+  #run by command rake main:foo.txt
+  #if this file foo.txt already exists then it wont get created.
+  task 'foo.txt' do
+    puts 'shall i make foo text'
+    touch "foo.txt"
+  end
+
+end
