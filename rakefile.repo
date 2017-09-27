@@ -40,3 +40,20 @@ namespace :main do
   end
 
 end
+
+#file task with dependencies
+file "abc.txt" => dependencies do
+  #your code in here
+  touch abc.txt
+end
+
+#file task without dependencies
+file "abc.txt" do
+  #your code in here
+  touch abc.txt
+end
+
+#invoking file task
+task :fileTask => "abc.txt" do
+  #your code goes here
+end
